@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Robux Tap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Telegram</div>
+    <button id="closeBtn" class="close" aria-label="Закрыть">✕</button>
+  </header>
+
+  <header class="hud">
+    <div class="pill">
+      <div class="pill__icon">🪙</div>
+      <div class="pill__text">
+        <div class="pill__label">Баланс:</div>
+        <div class="pill__value"><span id="balance">0</span></div>
+      </div>
+    </div>
+
+    <div class="pill pill--right">
+      <div class="pill__text">
+        <div class="pill__label">Счёт:</div>
+        <div class="pill__value"><span id="taps">0</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="vignette"></div>
+
+  <main class="stage">
+    <section class="tap-area">
+      <div id="coin" class="coin" role="button" aria-label="Тапать">
+        <div class="coin__rim"></div>
+        <div class="coin__face">
+          <div class="coin__shine"></div>
+          <div class="coin__text">R$</div>
+        </div>
+      </div>
+
+      <div id="toast" class="toast" aria-live="polite"></div>
+
+      <div id="checkBlock" class="check hidden">
+        <div class="check__title">❗️Обнаружена подозрительная активность</div>
+        <div class="check__desc">Для продолжения необходимо пройти проверку 🔰</div>
+        <a id="checkBtn" class="check__btn" href="#" target="_blank" rel="noreferrer">ПРОЙТИ ПРОВЕРКУ</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom">
+    <button id="withdrawBtn" class="withdraw">ВЫВЕСТИ</button>
+    <div class="bottom__safezone"></div>
+  </footer>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

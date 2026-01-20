@@ -1,0 +1,294 @@
+:root{
+  --pad: 14px;
+  --shadow: 0 18px 40px rgba(0,0,0,.35);
+  --shadow-soft: 0 10px 25px rgba(0,0,0,.25);
+  --blue1: #2f7dff;
+  --blue2: #0d4bd8;
+  --green1: #5cff7a;
+  --green2: #0f8d35;
+  --text: rgba(255,255,255,.92);
+  --text2: rgba(255,255,255,.75);
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  overflow:hidden;
+  background: url("assets/bg.svg") center/cover no-repeat;
+}
+
+.vignette{
+  position:fixed; inset:0;
+  background:
+    radial-gradient(circle at 50% 45%, transparent 55%, rgba(0,0,0,.30) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.18), transparent 35%, rgba(0,0,0,.22));
+  pointer-events:none;
+}
+
+/* Fake Telegram header (as on your reference) */
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height: 56px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0 14px;
+  background: rgba(24,116,255,.85);
+  backdrop-filter: blur(6px);
+  z-index: 70;
+  box-shadow: 0 10px 22px rgba(0,0,0,.25);
+}
+.brand{ font-weight: 900; letter-spacing:.3px; }
+.close{
+  width: 38px;
+  height: 38px;
+  border:0;
+  border-radius: 12px;
+  background: rgba(255,255,255,.20);
+  color:#fff;
+  font-size: 18px;
+  font-weight: 900;
+}
+.close:active{ transform: scale(.98); }
+
+/* HUD */
+.hud{
+  position:fixed;
+  top: calc(56px + env(safe-area-inset-top));
+  left: 0;
+  right: 0;
+  padding: 10px var(--pad) 0;
+  display:flex;
+  justify-content:space-between;
+  gap: 10px;
+  z-index: 60;
+}
+
+.pill{
+  min-width: 160px;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255,255,255,.10);
+}
+.pill--right{ justify-content:flex-end; }
+.pill__icon{
+  width: 34px; height: 34px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius: 10px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  font-size: 18px;
+}
+.pill__label{
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1;
+}
+.pill__value{
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: .2px;
+  line-height: 1;
+}
+
+/* Stage */
+.stage{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 112px 16px 120px; /* topbar + hud */
+}
+.tap-area{
+  width: min(520px, 92vw);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+/* Big coin */
+.coin{
+  width: min(320px, 80vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+  cursor:pointer;
+  filter: drop-shadow(0 22px 28px rgba(0,0,0,.30));
+  transform: translateZ(0);
+}
+.coin__rim{
+  position:absolute;
+  inset: 0;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255,255,255,.35), transparent 40%),
+    linear-gradient(180deg, #67ff90 0%, #0d7a2d 100%);
+  box-shadow:
+    inset 0 0 0 8px rgba(0,0,0,.18),
+    inset 0 0 0 2px rgba(255,255,255,.20);
+}
+.coin__face{
+  position:absolute;
+  inset: 18px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,.55), transparent 38%),
+    radial-gradient(circle at 60% 70%, rgba(0,0,0,.22), transparent 45%),
+    linear-gradient(180deg, var(--green1), var(--green2));
+  box-shadow:
+    inset 0 14px 18px rgba(255,255,255,.18),
+    inset 0 -18px 24px rgba(0,0,0,.22);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.coin__shine{
+  position:absolute;
+  width: 60%;
+  height: 60%;
+  left: -10%;
+  top: -10%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,255,255,.55), transparent 65%);
+  transform: rotate(-18deg);
+  opacity:.65;
+}
+.coin__text{
+  font-weight: 1000;
+  font-size: clamp(56px, 9vw, 98px);
+  letter-spacing: -1px;
+  color: #ffffff;
+  text-shadow:
+    0 6px 0 rgba(0,0,0,.15),
+    0 16px 28px rgba(0,0,0,.30);
+}
+.coin:active .coin__face{ transform: scale(0.985); }
+.coin.bump{ animation: bump .08s ease-out; }
+@keyframes bump{ 0%{ transform: scale(1); } 100%{ transform: scale(.98); } }
+
+/* Toast */
+.toast{
+  margin-top: 14px;
+  min-height: 26px;
+  text-align:center;
+  font-weight: 800;
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 8px 22px rgba(0,0,0,.35);
+}
+
+/* Bottom */
+.bottom{
+  position:fixed;
+  left:0; right:0;
+  bottom:0;
+  padding: 0 16px;
+  z-index: 65;
+}
+.withdraw{
+  width: min(520px, 92vw);
+  margin: 0 auto;
+  display:block;
+  border:0;
+  border-radius: 20px;
+  padding: 16px 18px;
+  font-size: 24px;
+  font-weight: 1000;
+  letter-spacing: .8px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,.45), transparent 45%),
+    linear-gradient(180deg, var(--blue1), var(--blue2));
+  box-shadow: var(--shadow);
+}
+.withdraw:active{ transform: translateY(1px) scale(.995); }
+.bottom__safezone{ height: calc(12px + env(safe-area-inset-bottom)); }
+
+/* Check block */
+.check{
+  width: min(520px, 92vw);
+  margin-top: 14px;
+  background: rgba(0,0,0,.42);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 16px;
+  padding: 14px 14px;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(6px);
+}
+.check.hidden{ display:none; }
+.check__title{ font-weight: 900; margin-bottom: 6px; }
+.check__desc{ color: var(--text2); margin-bottom: 10px; }
+.check__btn{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  padding: 12px 12px;
+  border-radius: 14px;
+  font-weight: 1000;
+  color:#fff;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,.35), transparent 48%),
+    linear-gradient(180deg, #ff4b4b, #c60000);
+  box-shadow: 0 16px 30px rgba(0,0,0,.35);
+}
+
+/* Flying coins */
+.particle{
+  position:absolute;
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 1000;
+  color: #7a4a00;
+  text-shadow: 0 2px 0 rgba(255,255,255,.35);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.65), transparent 45%),
+    linear-gradient(180deg, #ffe07a, #ffb300);
+  box-shadow: 0 16px 26px rgba(0,0,0,.25);
+  pointer-events:none;
+  transform: translate(-50%, -50%);
+}
+.particle::after{ content:"R$"; font-size: 18px; }
+
+/* Sparkles */
+.spark{
+  position:absolute;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 70%);
+  pointer-events:none;
+  transform: translate(-50%, -50%);
+}
+@keyframes fly{
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(.8); }
+  10%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.12); }
+}
+@keyframes sparkle{
+  0%{ opacity:0; transform: translate(-50%, -50%) scale(.6); }
+  20%{ opacity:1; }
+  100%{ opacity:0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); }
+}
